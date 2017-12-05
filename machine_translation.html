@@ -12695,7 +12695,7 @@ new états est parfois en en en et il est est en en &lt;PAD&gt; &lt;PAD&gt; &lt;
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">model_final</span><span class="p">(</span><span class="n">input_shape</span><span class="p">,</span> <span class="n">output_sequence_length</span><span class="p">,</span> <span class="n">english_vocab_size</span><span class="p">,</span> <span class="n">french_vocab_size</span><span class="p">):</span>
@@ -12712,9 +12712,9 @@ new états est parfois en en en et il est est en en &lt;PAD&gt; &lt;PAD&gt; &lt;
     <span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
     <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Embedding</span><span class="p">(</span><span class="n">english_vocab_size</span><span class="p">,</span> <span class="n">english_vocab_size</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
 
-    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Bidirectional</span><span class="p">(</span><span class="n">GRU</span><span class="p">(</span><span class="n">output_sequence_length</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="kc">False</span><span class="p">)))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Bidirectional</span><span class="p">(</span><span class="n">GRU</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="kc">False</span><span class="p">)))</span>
     <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">RepeatVector</span><span class="p">(</span><span class="n">output_sequence_length</span><span class="p">))</span> 
-    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Bidirectional</span><span class="p">(</span><span class="n">GRU</span><span class="p">(</span><span class="n">output_sequence_length</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">)))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Bidirectional</span><span class="p">(</span><span class="n">GRU</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">)))</span>
     
     <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">TimeDistributed</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="n">french_vocab_size</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)))</span>
     <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="n">sparse_categorical_crossentropy</span><span class="p">,</span>
@@ -12759,7 +12759,7 @@ new états est parfois en en en et il est est en en &lt;PAD&gt; &lt;PAD&gt; &lt;
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="prompt input_prompt">In&nbsp;[50]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -12781,7 +12781,7 @@ new états est parfois en en en et il est est en en &lt;PAD&gt; &lt;PAD&gt; &lt;
         <span class="nb">len</span><span class="p">(</span><span class="n">x_tk</span><span class="o">.</span><span class="n">word_index</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span>
         <span class="nb">len</span><span class="p">(</span><span class="n">y_tk</span><span class="o">.</span><span class="n">word_index</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
     
-    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
     
 
     
@@ -12819,51 +12819,31 @@ new états est parfois en en en et il est est en en &lt;PAD&gt; &lt;PAD&gt; &lt;
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Train on 110288 samples, validate on 27573 samples
-Epoch 1/20
-110288/110288 [==============================] - 62s 561us/step - loss: 2.7771 - acc: 0.4441 - val_loss: 2.2269 - val_acc: 0.4827
-Epoch 2/20
-110288/110288 [==============================] - 60s 544us/step - loss: 2.0884 - acc: 0.4969 - val_loss: 1.9806 - val_acc: 0.5165
-Epoch 3/20
-110288/110288 [==============================] - 59s 533us/step - loss: 1.9126 - acc: 0.5212 - val_loss: 1.8334 - val_acc: 0.5358
-Epoch 4/20
-110288/110288 [==============================] - 60s 540us/step - loss: 1.7692 - acc: 0.5431 - val_loss: 1.7062 - val_acc: 0.5609
-Epoch 5/20
-110288/110288 [==============================] - 57s 518us/step - loss: 1.6438 - acc: 0.5683 - val_loss: 1.5877 - val_acc: 0.5779
-Epoch 6/20
-110288/110288 [==============================] - 62s 564us/step - loss: 1.5504 - acc: 0.5849 - val_loss: 1.5056 - val_acc: 0.5918
-Epoch 7/20
-110288/110288 [==============================] - 60s 541us/step - loss: 1.4733 - acc: 0.5977 - val_loss: 1.4402 - val_acc: 0.6032
-Epoch 8/20
-110288/110288 [==============================] - 60s 548us/step - loss: 1.4257 - acc: 0.6053 - val_loss: 1.3944 - val_acc: 0.6123
-Epoch 9/20
-110288/110288 [==============================] - 58s 526us/step - loss: 1.3648 - acc: 0.6179 - val_loss: 1.3280 - val_acc: 0.6283
-Epoch 10/20
-110288/110288 [==============================] - 58s 526us/step - loss: 1.3118 - acc: 0.6323 - val_loss: 1.2897 - val_acc: 0.6384
-Epoch 11/20
-110288/110288 [==============================] - 58s 530us/step - loss: 1.2769 - acc: 0.6401 - val_loss: 1.2540 - val_acc: 0.6450
-Epoch 12/20
-110288/110288 [==============================] - 58s 528us/step - loss: 1.2242 - acc: 0.6507 - val_loss: 1.2035 - val_acc: 0.6569
-Epoch 13/20
-110288/110288 [==============================] - 58s 524us/step - loss: 1.1930 - acc: 0.6564 - val_loss: 1.1687 - val_acc: 0.6609
-Epoch 14/20
-110288/110288 [==============================] - 56s 512us/step - loss: 1.1637 - acc: 0.6625 - val_loss: 1.1609 - val_acc: 0.6650
-Epoch 15/20
-110288/110288 [==============================] - 56s 510us/step - loss: 1.1249 - acc: 0.6747 - val_loss: 1.1031 - val_acc: 0.6827
-Epoch 16/20
-110288/110288 [==============================] - 56s 510us/step - loss: 1.1221 - acc: 0.6772 - val_loss: 1.1078 - val_acc: 0.6836
-Epoch 17/20
-110288/110288 [==============================] - 55s 500us/step - loss: 1.0747 - acc: 0.6905 - val_loss: 1.0560 - val_acc: 0.6972
-Epoch 18/20
-110288/110288 [==============================] - 56s 507us/step - loss: 1.0485 - acc: 0.6964 - val_loss: 1.0446 - val_acc: 0.6975
-Epoch 19/20
-110288/110288 [==============================] - 56s 505us/step - loss: 1.0657 - acc: 0.6879 - val_loss: 1.0459 - val_acc: 0.6968
-Epoch 20/20
-110288/110288 [==============================] - 56s 508us/step - loss: 1.0366 - acc: 0.6985 - val_loss: 1.0230 - val_acc: 0.7046
+Epoch 1/10
+110288/110288 [==============================] - 424s 4ms/step - loss: 2.6268 - acc: 0.4368 - val_loss: 1.9508 - val_acc: 0.5021
+Epoch 2/10
+110288/110288 [==============================] - 362s 3ms/step - loss: 1.7515 - acc: 0.5574 - val_loss: 1.4732 - val_acc: 0.6210
+Epoch 3/10
+110288/110288 [==============================] - 304s 3ms/step - loss: 1.2239 - acc: 0.6739 - val_loss: 0.9740 - val_acc: 0.7164
+Epoch 4/10
+110288/110288 [==============================] - 297s 3ms/step - loss: 0.8210 - acc: 0.7600 - val_loss: 0.6265 - val_acc: 0.8172
+Epoch 5/10
+110288/110288 [==============================] - 299s 3ms/step - loss: 0.5199 - acc: 0.8504 - val_loss: 0.4702 - val_acc: 0.8595
+Epoch 6/10
+110288/110288 [==============================] - 301s 3ms/step - loss: 0.3413 - acc: 0.9108 - val_loss: 0.3599 - val_acc: 0.8896
+Epoch 7/10
+110288/110288 [==============================] - 316s 3ms/step - loss: 0.2960 - acc: 0.9188 - val_loss: 0.2362 - val_acc: 0.9414
+Epoch 8/10
+110288/110288 [==============================] - 311s 3ms/step - loss: 0.2142 - acc: 0.9460 - val_loss: 0.2199 - val_acc: 0.9439
+Epoch 9/10
+110288/110288 [==============================] - 317s 3ms/step - loss: 0.1989 - acc: 0.9493 - val_loss: 0.2040 - val_acc: 0.9488
+Epoch 10/10
+110288/110288 [==============================] - 319s 3ms/step - loss: 0.1794 - acc: 0.9538 - val_loss: 0.1762 - val_acc: 0.9548
 Sample 1:
-il a conduit un camion camion rouge &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt;
+il a vu un vieux camion jaune &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt;
 Il a vu un vieux camion jaune
 Sample 2:
-new jersey est généralement chaud pendant l&#39; mais il est est en en &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt;
+new jersey est parfois calme pendant l&#39; automne et il est neigeux en avril &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt;
 &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt; &lt;PAD&gt;
 </pre>
 </div>
